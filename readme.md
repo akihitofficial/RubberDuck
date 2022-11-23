@@ -30,18 +30,18 @@ Com a distro instalada, execute os seguintes comandos:
 sudo apt update && sudo apt -y upgrade
 sudo apt install xrdp
 sudo apt install -y xfce4
-
-(Se promptado algo, escolha gdm3)
-
+```
+Se perguntado algo, escolha **gdm3**.
+```
 sudo cp /etc/xrdp/xrdp.ini /etc/xrdp/xrdp.ini.bak
 sudo sed -i 's/3389/3390/g' /etc/xrdp/xrdp.ini
 sudo sed -i 's/max_bpp=32/#max_bpp=32\nmax_bpp=128/g' /etc/xrdp/xrdp.ini
 sudo sed -i 's/xserverbpp=24/#xserverbpp=24\nxserverbpp=128/g' /etc/xrdp/xrdp.ini
 echo xfce4-session > ~/.xsession
 sudo nano /etc/xrdp/startwm.sh
-
-(Comente as últimas duas linhas com #, depois adicione uma linha adicional contendo o seguinte: starxfce4)
-
+```
+Comente as últimas duas linhas com #, depois adicione uma linha adicional contendo o seguinte: ``starxfce4``.
+```
 sudo /etc/init.d/xrdp start
 ```
 Com os comandos já utilizados, vá até a barra de pesquisa do Windows e digite: **Conexão da Área Remota**. No lugar do IP, coloque: ``localhost:3390``. Depois, faça login utilizando as mesmas credenciais da sua distro.
