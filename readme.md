@@ -1,5 +1,3 @@
-# RubberDuck
-
 ![image](https://img.shields.io/badge/Versão-2.0.0-blue.svg?style=for-the-badge&logo=verizon)
 ![image](https://img.shields.io/badge/Estado-Concluído-green.svg?style=for-the-badge&logo=instatus&logoColor=white)
 
