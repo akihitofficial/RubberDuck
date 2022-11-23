@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="./style/main.min.css?v=2" rel="stylesheet">
+    <script defer src="./style/js/WindowFunctions.js"></script>
+    <title>RubberDuck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <WebView src="https://example.com/" httpreferrer="https://example.com/" plugins></WebView>
+    <div class="application-header">
+        <div id="closeBtn" class="button box close-icon"></div>
+        <div id="helpBtn" class="button box help-icon"></div>
+        <div id="minimizeBtn" class="button box minimize-icon"></div>
+    </div>
+    <div class="container">
+        <div class="logo"></div>
+        <h1 class="title">Fazer Login</h1>
+        <form id="appLogin" class="validate-form">
+            <div id="clickEffectOne" class="float-container validate-input require_username">
+                <label for="username">E-mail</label>
+                <input id="username" type="text" name="username">
+            </div>
+            <div id="clickEffectTwo" class="float-container validate-input require_password">
+                <label for="password">Senha</label>
+                <input id="password" type="password" name="password">
+            </div>
+            <input type="hidden" name="csrftoken">
+            <input type="hidden" name="remember_me" value="false">
+            <button id="submitLogin" class="login-button">Entrar</button>
+        </form>
+        <div class="keepAliveWrapper">
+            <label for="keepLoggedIn">
+                <p class="keepAlive">Manter login</p>
+                <input type="checkbox" id="keepLoggedIn" disabled="disabled">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="info-container">
+            <div id="registerBtn" class="extra">Registre-se! É grátis!</div>
+            <div id="recoveryBtn" class="extra">Esqueceu a sua senha?</div>
+        </div>
+        <div class="footer">
+            <div class="simple">
+                2022 - 2023 DotDev Group © <b>RubberDuck 2.0.0</b>
+            </div>
+        </div>
+    </div>
+    <style>
+        WebView {
+			 padding: 0;
+              border: 0;
+			  margin: 0;
+			 z-index: 1;
+			  height: 100%;
+			   width: 100%;
+            position: absolute;
+        }
+    </style>
+    <illustration>
+        <div class="notification-popup-overlay">
+            <div class="notification-popup">
+                <h1>Notificações</h1>
+                <div class="notification-initialized">
+                    <div class="init-icon"></div>
+                    <h1 class="initialized-title"></h1>
+                    <p class="initialized-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="white-overlay-2">
+            <div class="cache-clear cacheClear-icon" id="clearCache"></div>
+        </div>
+        <div class="white-overlay">
+            <div class="notification-center notification-icon">
+                <div class="new-notification">!</div>
+            </div>
+        </div>
+    </illustration>
+    <div class="loading">
+        <div class="rubberduck"></div>
+    </div>
+    <!-- IPC Handlers -->
+    <script>
+        // Constants & Requires
+        const { ipcRenderer } = require('electron');
+        const ClickURL = new Audio('./mp3/notificationClick.mp3');
+        const NewNotificationURL = new Audio('./mp3/newNotification.mp3');
+        const LoginNotificationURL = new Audio('./mp3/loginNotification.mp3');
+        const IPC = ipcRenderer;
+        const WebView = document.querySelector('WebView');
+        // Audio
+        ClickURL.volume = 0.5;
+        NewNotificationURL.volume = 0.25;
+        LoginNotificationURL.volume = 0.5;
+        // jQuery for Application
+        window.$ = window.jQuery = require('./style/js/jquery-3.6.1.min.js');
+        // Object Serializing Function
+        $.fn.serializeObject = function () {
+			var o = {};
+			var a = this.serializeArray();
+			$.each(a, function () {
+				if (o[this.name]) {
+					if (!o[this.name].push) {
+						o[this.name] = [o[this.name]];
+					}
+					o[this.name].push(this.value || '');
+				} else {
+					o[this.name] = this.value || '';
+				}
+			});
+			return o;
+		};
+        // First Floating Label
+        const username = $('#username');
+        const clickEffectOne = $('#clickEffectOne');
+        username.on('focus', () => {
+            clickEffectOne.addClass('active');
+        });
+        username.blur(function(){
+            if($('#username').val() != '') {
+                return
+            } else {
+                clickEffectOne.removeClass('active');
+            }
+        })
+        // Second Floating Label
+        const password = $('#password');
+        const clickEffectTwo = $('#clickEffectTwo');
+        password.on('focus', () => {
+            clickEffectTwo.addClass('active');
+        });
+        password.blur(function(){
+            if($('#password').val() != '') {
+                return
+            } else {
+                clickEffectTwo.removeClass('active');
+            }
+        });
+        // IPC Translator (Next Update)
+        IPC.on('setConfig', (e, config) => {
+            Configuration = config;
+        })
+        // Login Form
+        $('#appLogin').submit(async function(event) {
+            event.preventDefault();
+            $('#submitLogin').prop('disabled', true);
+            let serializedForm = $('#appLogin').serializeObject();
+            if ($('.keepAliveWrapper input').is(':checked')) {
+                IPC.send('keepDataAlive', serializedForm);
+            } else if (!$('.keepAliveWrapper input').is(':checked')) {
+                IPC.send('doNotKeepDataAlive');
+            };
+            IPC.send('login', serializedForm.username, serializedForm.password);
+        });
+        // Login Handler
+        IPC.on('loginCallback', (e, cookie, data, status) => {
+            if (data.status == 'error' && data.location) {
+                $('.notification-popup').append(
+                    '<div class="notification">' +
+                        '<div class="success-icon"></div>' +
+                        '<h1 class="notification-title">Sucesso!</h1>' +
+                        '<p class="notification-text">Nos vemos em breve.</p>' +
+                    '</div>');
+                NewNotificationURL.play();
+                WebView.executeJavaScript(`
+                    $.ajax({
+                        type: "POST",
+                        url: "${Configuration.Web.HotelURL}/auth/login/request",
+                        data: ${JSON.stringify($("#appLogin").serializeObject())},
+                        dataType: "json"
+                    }).done(function(result) {
+                        console.log(JSON.stringify(result));
+                        location.href="${Configuration.Web.ClientURL}";
+                    });
+                `);
+            } else {
+                if (data.status == 'error' && data.message) {
+                    $('.notification-popup').append(
+                    '<div class="notification">' +
+                        '<div class="notification-icon"></div>' +
+                        '<h1 class="notification-title">Erro!</h1>' +
+                        '<p class="notification-text">' + data.message + '.</p>' +
+                    '</div>');
+                    NewNotificationURL.play();
+                } else if (status > 201 || status < 200) {
+                    $('.notification-popup').append(
+                    '<div class="notification">' +
+                        '<div class="notification-icon"></div>' +
+                        '<h1 class="notification-title">Falha na API!</h1>' +
+                        '<p class="notification-text"> Erro ' + status + ' na API.</p>' +
+                    '</div>');
+                    NewNotificationURL.play();
+                } else {
+                    $('.notification-popup').append(
+                    '<div class="notification">' +
+                        '<div class="notification-icon"></div>' +
+                        '<h1 class="notification-title">Falha na API!</h1>' +
+                        '<p class="notification-text"> Erro ao comunicar-se.</p>' +
+                    '</div>');
+                    NewNotificationURL.play();
+                }
+                $('#submitLogin').prop('disabled', false);
+            }
+        });
+        // WebView Handler
+        WebView.addEventListener('did-stop-loading', (e) => {
+			if (String(WebView.getURL()).includes('client')) {
+				$('WebView').show();
+                $('.application-header').hide();
+                $('.loading').show();
+                setTimeout(function(){
+                    $('.loading').fadeOut()
+                }, 500);
+                IPC.send('openClient');
+			}
+		});
+        // Keep Alive Handler
+        function keepAlive() {
+            if ($('#username').val() != '' && $('#password').val() != '') {
+                $('#keepLoggedIn').removeAttr('disabled');
+            } else if ($('#username').val() == '' && $('#password').val() == ''){
+                $('#keepLoggedIn').attr('disabled', 'disabled');
+            }
+        };
+        $('#username').blur(function() {
+            keepAlive();
+        });
+        $('#password').blur(function() {
+            keepAlive();
+        });
+    </script>
+    <!-- Notification Handlers -->
+    <script>
+        $('.white-overlay').on('click', function(e) {
+            $('.notification-popup-overlay').toggle();
+            $('.notification-popup-overlay').toggleClass('sound');
+            ClickURL.play()
+            e.stopPropagation();
+        });
+        $('body').on('click', function() {
+            $('.notification-popup-overlay').hide();
+            if ($('.notification-popup-overlay').hasClass('sound')) {
+                ClickURL.play();
+                $('.notification-popup-overlay').removeClass('sound');
+            }
+        });
+        // On Document Ready
+        $(document).ready(() => {
+            $('WebView').hide();
+            $('.notification-popup-overlay').hide();
+            $('.notification').hide();
+            $('.initialized-title').text('Aplicativo Iniciado');
+            $('.initialized-text').text('Bem-vindo. Quack!');
+            setTimeout(function(){
+                $('.loading').fadeOut();
+                LoginNotificationURL.play();
+            }, 1000);
+            IPC.send('getConfig');
+            IPC.send('getData');
+        });
+        // Keep Alive IPC Handler
+        IPC.on('setData', (e, data) => {
+            if (data.username && data.password) {
+                $("#username").val(data.username);
+                $("#password").val(data.password);
+            };
+            if ($('#username').val() != '' && $('password').val() != '') {
+                // Click Effects
+                $('#clickEffectOne').addClass('active');
+                $('#clickEffectTwo').addClass('active');
+                // Keep Alive
+                $('#keepLoggedIn').removeAttr('disabled');
+                 $('#keepLoggedIn').prop('checked', true);
+            };
+        });
+        // IPC Handler
+        $('#clearCache').on('click', function() {
+            IPC.send('clearCache'); 
+            ClickURL.play();
+        });
+    </script>
+</body>
+</html>

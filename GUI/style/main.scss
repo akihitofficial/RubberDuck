@@ -1,0 +1,463 @@
+* {
+    user-select: none;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-variant-ligatures: common-ligatures;
+    backface-visibility: hidden;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu Condensed';
+}
+
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+input, button, textarea, :focus {
+    outline: none;
+}
+
+a:not([draggable=true]),
+img:not([draggable=true]) {
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+a[href^="http://"],
+a[href^="https://"],
+a[href^="ftp://"] {
+    -webkit-user-drag: auto;
+    user-drag: auto;
+}
+
+.container {
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    width: 405px;
+    height: 100%;
+    padding-top: 0;
+    padding: 55px;
+}
+
+.float-container {
+    position: relative;
+    input {
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 30px;
+    outline: 0;
+    border: 0;
+    padding: 31px 25px 19px 25px;
+    color: #000;
+    font-family: 'Ubuntu Condensed';
+    font-size: 16px;
+    }
+}
+
+.float-container input:last-child {
+    margin-top: 15px;
+}
+
+label {
+    position: absolute;
+    font-size: 16px;
+    transform: translate(25px, 29px) scale(1);
+    transform-origin: top left;
+    transition: all .1s ease-in-out;
+    font-weight: 400;
+}
+
+.active label {
+    transform: translate(25px, 20px) scale(0.8);
+}
+
+.application-header {
+    padding: 25px;
+    background: transparent;
+    z-index: 999!important;
+    -webkit-app-region: drag;
+}
+
+.box {
+    display: block;
+    float: right;
+    height: 14px;
+    width: 14px;
+    margin-left: 20px;
+    -webkit-app-region: no-drag;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.login-button {
+    float: right;
+    margin-top: 15px;
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+    padding: 15px 40px;
+    text-transform: uppercase;
+    font-family: 'Ubuntu Condensed';
+    font-size: 16px;
+    background: #ff9400;
+    color: #000;
+    border-radius: 5px;
+    border: 2px solid #ffc61a;
+}
+
+.login-button:hover {
+    background: #ffc61a;
+    border-color: #ffee01;
+}
+
+.login-button:active {
+    background: #e96000;
+    border-color: #ff9400;
+}
+
+.info-container {
+    margin-top: 100px;
+    position: relative;
+}
+
+.extra {
+    font-family: 'Ubuntu';
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, .6);
+    cursor: pointer;
+}
+
+.extra:hover {
+    color: rgba(0, 0, 0, .8)
+}
+
+.extra:last-child {
+    margin-top: 5px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-bottom: 55px;
+    padding-right: 55px;
+}
+
+.simple {
+    font-family: 'Ubuntu';
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, .6);
+}
+
+illustration {
+    position: absolute;
+    right: 0;
+    width: calc(100% - 405px);
+    height: 100%;
+    background: url('./images/illustration.png');
+}
+
+.white-overlay {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    background: #fff;
+    position: absolute;
+    bottom: 55px;
+    right: 55px;
+}
+
+.notification-popup-overlay {
+    position: absolute;
+    right: 55px;
+    bottom: 115px;
+    background: #fff;
+    width: 250px;
+    min-height: 105px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.notification-popup {
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .1);
+    min-height: 105px;
+    height: auto;
+    width: 250px;
+    padding: 15px;
+    h1 {
+        font-size: 14px;
+        margin-bottom: 5px;
+        margin-top: 0;
+    }
+}
+
+.notification-initialized {
+    display: block;
+    position: relative;
+    height: 50px;
+    width: 220px;
+    background: rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    h1 {
+        position: absolute;
+        margin-top: 5px;
+        margin-left: 10px;
+        display: inline-block;
+    }
+    p {
+        position: absolute;
+        display: inline-block;
+        margin-top: 22px;
+        margin-left: 10px;
+        width: 170px;
+    }
+    .init-icon {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+        border-radius: 5px;
+        background-color: #ff9400;
+        background-image: url('./images/init-icon.png');
+    }
+}
+
+.notification {
+    display: block;
+    position: relative;
+    height: 50px;
+    width: 220px;
+    background: rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    margin-top: 15px;
+    .notification-icon {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+        border-radius: 5px;
+        background-color: #b60000;
+        background-image: url('./images/burn-duck.png');
+    }
+    .success-icon {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+        border-radius: 5px;
+        background-color: #007710;
+        background-image: url('./images/success-icon.png');
+    }
+    h1 {
+        position: absolute;
+        margin-top: 5px;
+        margin-left: 10px;
+        display: inline-block;
+    }
+    p {
+        position: absolute;
+        display: inline-block;
+        margin-top: 22px;
+        margin-left: 10px;
+        width: 170px;
+    }
+}
+
+.notification-center {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .1);
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+}
+
+.notification-center:hover {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.notification-center:active {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.white-overlay-2 {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    background: #fff;
+    position: absolute;
+    bottom: 55px;
+    right: 120px;
+}
+
+.cache-clear {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .1);
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+}
+
+.cache-clear:hover {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.cache-clear:active {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.new-notification {
+    display: block;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    height: 14px;
+    width: 14px;
+    background: #ff9400;
+    font-size: 10px;
+    text-align: center;
+    line-height: 14px;
+    font-family: 'Ubuntu';
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.close-icon {
+    background: url('./images/close-button.png');
+}
+
+.minimize-icon {
+    background: url('./images//minimize-button.png')
+}
+
+.help-icon {
+    background: url('./images/help-center.png');
+}
+
+.notification-icon {
+    background-image: url('./images/notification-icon.png');
+}
+
+.cacheClear-icon {
+    background-image: url('./images/clearcache-icon.png');
+}
+
+.logo {
+    width: 135px;
+    height: 135px;
+    background: url('./images/logo-new.png');
+    background-size: cover;
+    margin: 0 auto;
+}
+
+.loading {
+    display: block;
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999!important;
+    .rubberduck {
+        position: absolute;
+        width: 135px;
+        height: 135px;
+        background: url('./images/logo-new.png');
+        background-size: cover;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: quack 3s infinite ease-in-out;
+    }
+}
+
+@keyframes quack {
+    0% {
+        top: 50%;
+    }
+    50% {
+        top: 48%;
+    }
+    100% {
+        top: 50%;
+    }
+}
+
+.keepAlive {
+    font-size: 16px;
+    margin-top: -14px;
+    margin-left: 6px;
+}
+
+.keepAliveWrapper {
+    position: relative;
+    margin-top: 12px;
+}
+
+.keepAliveWrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: -15px;
+    left: -25px;
+    height: 25px;
+    width: 25px;
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+.keepAliveWrapper:hover input~.checkmark {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.keepAliveWrapper input:checked~.checkmark {
+    background-color: #008d1b;
+    border-bottom: 4px solid #006212;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.keepAliveWrapper input:checked~.checkmark:after {
+    display: block;
+}
+
+.keepAliveWrapper .checkmark:after {
+    left: 9px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

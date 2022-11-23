@@ -1,0 +1,23 @@
+{
+    "App": {
+        "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36"
+    },
+    "Discord": {
+        "RichPresenceEnabled": true,
+        "RichPresenceID": "1044317815634669648",
+        "RichPresenceDetailsOne": "Jogando",
+        "RichPresenceLargeImage": "devduck",
+        "RichPresenceButtonFirstText": "Acesse o RubberDuck",
+        "InviteURL": "https://discord.com"
+    },
+    "Hotel": {
+        "HotelName": "RubberDuck"
+    },
+    "Web": {
+        "HotelURL": "https://example.com",
+        "RegisterURL": "https://example.com/registration",
+        "RecoverPasswordURL": "https://example.com/password/claim",
+        "ClientURL": "https://example.com/client",
+        "HelpCenter": "https://help.example.com"
+    }
+}
