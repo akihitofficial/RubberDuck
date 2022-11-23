@@ -7,8 +7,9 @@
     "main": "index.js",
     "scripts": {
         "start": "electron .",
-        "publish": "electron-builder --win -p always",
-        "build": "electron-builder --linux"
+        "build-win": "electron-builder --win",
+        "build-linux": "electron-builder --linux",
+        "build-macos": "electron-builder --mac"
     },
     "keywords": [
         "Application",
@@ -71,10 +72,10 @@
         "nsis": {
             "installerIcon": "icon.ico",
             "uninstallerIcon": "icon.ico",
-            "uninstallDisplayName": "Desinstalar Aplicativo",
+            "uninstallDisplayName": "Uninstall",
             "oneClick": true,
             "perMachine": false,
-            "artifactName": "uninstall.${ext}"
+            "artifactName": "RubberDuckSetup.${ext}"
         },
         "mac": {
             "icon": "icon.png",

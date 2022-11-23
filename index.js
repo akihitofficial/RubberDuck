@@ -1,5 +1,5 @@
 // Application Main Requirements
-const { app, BrowserWindow, ipcMain, shell, Main } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const { readFileSync, writeFile, existsSync, unlinkSync } = require('fs');
 // Application Constants
 const Path = require('path');
@@ -78,7 +78,7 @@ app.commandLine.appendSwitch('disable-site-isolation-trials');
 // Create Graphical User Interface
 let createWindow = async() => {
     MainWindow = new BrowserWindow({
-        icon: Path.join(__dirname, '/icon.png'),
+        icon: Path.join(__dirname, '/ico.ico'),
         width: 1280,
         height: 720,
         resizable: false,
