@@ -1,74 +1,108 @@
-# Zeus
+# RubberDuck
 
-![image](https://img.shields.io/badge/Versão-0.0.0-blue.svg?style=for-the-badge&logo=verizon)
-![image](https://img.shields.io/badge/Estado-Revisão-yellow.svg?style=for-the-badge&logo=instatus&logoColor=white)
-![image](https://img.shields.io/badge/Java-8-red.svg?style=for-the-badge&logo=java&logoColor=white)
+![image](https://img.shields.io/badge/Versão-2.0.0-blue.svg?style=for-the-badge&logo=verizon)
+![image](https://img.shields.io/badge/Estado-Concluído-green.svg?style=for-the-badge&logo=instatus&logoColor=white)
 
-**Zeus** é a denominação do projeto que sucede **Hera**, o servidor de alta performance criado por [@oraphaleao](https://github.com/oraphaleao). O intuito do projeto é dar prosseguimento ao emulador Habbo, ampliando a API original do **Comet** criada e mantida até pouco tempo atrás por [@LeonHartley](https://github.com/LeonHartley) para ter maior assimilação ao produto original. O código roda, atualmente, no **JRE/JDK** (_Java Runtime Environment_; _Java Development Kit_) **1.8**.
+**RubberDuck** é um aplicativo feito para atender as necessidades comunitárias. Ele possui todas as ferramentas que um aplicativo de Flash pode oferecer, com um bônus de interação direta entre cliente e aplicativo. Como ele é altamente dependente da Lux API, um outro projeto da dotDev Group, muito provavelmente não se integrará corretamente em servidores que utilizem de **Cosmic** como site e **Arcturus Morningstar** como emulador.
 
-### Compilando o Emulador
-Você _deve_ utilizar o IntelliJ para compilar o emulador. Além dele contar com uma interface mais amigável que a IDE Eclipse, ele abre margem para a troca instantânea da JDK através do Maven. Em caso de você estar perdido, basta seguir a seguinte linha de comando:
-``File`` ``Project Structure`` ``+`` ``C:/path/to/jdk1.8.0`` ``JDK`` ``+`` ``C:/path/to/jdk1.8.0/lib/tools.jar``
+### Configurando o Aplicativo
+Acesse o arquivo ``configuration.json`` e faça as alterações por lá. O nome do aplicativo deve ser mantido, contudo, alterações na API devem ser feitas. Substitua o link ``example.com`` pelo que está sendo utilizado atualmente. Vá até a pasta ``GUI`` e edite o arquivo ``index.html``, editando, na WebView, os mesmos valores. Feito isso, você está pronto para compilar.
 
-#### Coerce
-Para instalar o [Coerce](https://github.com/LeonHartley/Coerce) como dependência, basta baixá-lo e abri-lo com o IntelliJ. Feito isso, ao invés de clicar em ``package``, você irá clicar no botão ``install``. Após a compilação, ele estará disponível para ser utilizado como dependência — possibilitando com que o Zeus seja compilado sem problema algum.
+### Compilando o Aplicativo
+Você precisará das ferramentas NodeJS e NPM (Node Packet Manager) para fazer isso. Com os scripts de compilação indexados, basta você utilizar eles de acordo com o sistema operacional em utilização. O tutorial segue da seguinte forma:
+
+#### Windows
+```
+npm i
+npm run build--win
+```
+Após o término da compilação, vá até a pasta **releases** e você estará pronto para fazer a distribuição.
+
+#### Linux (WSL2)
+Para fazer uma compilação no Linux você precisa ter um sistema operacional/distro baseada. Contudo, com o Windows disponibilizando mais e mais ferramentas de desenvolvimento, todos podem utilizar do **WSL2**. Primeiro, reinicie seu computador, vá até a BIOS e ative a virtualização. Após, retorne para este tutorial e siga este [link](https://learn.microsoft.com/pt-br/windows/wsl/install).
+
+Com a distro instalada, execute os seguintes comandos:
+```
+sudo apt update && sudo apt -y upgrade
+sudo apt install xrdp
+sudo apt install -y xfce4
+
+(Se promptado algo, escolha gdm3)
+
+sudo cp /etc/xrdp/xrdp.ini /etc/xrdp/xrdp.ini.bak
+sudo sed -i 's/3389/3390/g' /etc/xrdp/xrdp.ini
+sudo sed -i 's/max_bpp=32/#max_bpp=32\nmax_bpp=128/g' /etc/xrdp/xrdp.ini
+sudo sed -i 's/xserverbpp=24/#xserverbpp=24\nxserverbpp=128/g' /etc/xrdp/xrdp.ini
+echo xfce4-session > ~/.xsession
+sudo nano /etc/xrdp/startwm.sh
+
+(Comente as últimas duas linhas com #, depois adicione uma linha adicional contendo o seguinte: starxfce4)
+
+sudo /etc/init.d/xrdp start
+```
+Com os comandos já utilizados, vá até a barra de pesquisa do Windows e digite: **Conexão da Área Remota**. No lugar do IP, coloque: ``localhost:3390``. Depois, faça login utilizando as mesmas credenciais da sua distro.
+
+Dentro da máquina, execute os seguintes comandos no terminal:
+```
+sudo apt install nodejs
+sudo apt install npm
+```
+Baixe os arquivos do repositório e coloque na sua Área de Trabalho. Use o comando:
+```
+cd ~/Desktop/RubberDuck
+```
+Depois estes:
+```
+npm i
+npm run build--linux
+```
+Após a compilação, seu aplicativo estará pronto para distribuição, localizado na pasta **releases**. Contudo, ainda é necessário com que haja um gerenciador de pacotes Debian para fazer a instalação, no qual será amplamente explicada em um guia na aba de ajuda da plataforma.
+
+#### MacOS
+Em breve.
 
 ---
 
-Feito todo o passo a passo, prossiga com a mudança definitiva da versão do _Development Kit_. Na indexação, faça a ressincronização do Maven clicando no símbolo de recarregar ao passar o mouse por cima do ícone do compilador. Agora, clique em ``package`` e ignore avisos acerca de pacotes desatualizados, afinal eles virão futuramente para o projeto através de Atualizações de Segurança[^1].
+### Editando o RubberDuck
+O conhecimento de JavaScript, HTML e CSS é essencial. Nós utilizamos uma linguagem compilada do CSS para facilitar a integração com todos os dispositivos, chamada de Sass. É recomendado que você utilize o Visual Studio Code para testar e implementar novas funcionalidades ao RubberDuck. ElectronJS é a framework utilizada, ainda que na sua versão mais primitiva: 11.1.0, isto para conseguirmos emular o Adobe Flash Player.
 
-### Ligando o Emulador
-0. Copie as pastas ``config``, ``configuration`` e ``lib`` (localizada dentro do ``target`` no Zeus-Server) para outro lugar.
-1. Copie o arquivo ``Zeus-Server-0.0.0-STABLE.jar`` para o mesmo lugar que as pastas anteriormente mencionadas.
-2. Configure a conexão ao seu banco de dados dentro da pasta ``config`` mexendo no arquivo ``zeus.properties``.
-3. Crie um arquivo chamado ``run.bat`` e clique com o botão direito para _Editar_.
-4. Escolha uma das opções abaixo para ligar o Zeus:
-
-#### _Java 8 PATH_
+#### IPC
+Um IPC é um processo que acontece dentro do Electron. Para convocá-lo, nós utilizamos a constante ``IPC``. Suas funções são simples e essenciais, executando um rol de capacidades dentro do aplicativo e expandindo a sua funcionalidade. Por exemplo, eu quero que um botão me leve a um link externo. Eu utilizo do seguinte código:
 ```
-java8 -jar -Dfile.encoding=UTF-8 Zeus-Server-0.0.0-STABLE.jar
+IPC.send('openMyURL', 'https://example.com/')
 ```
-#### _Java 8 Directory Pointing_
+Dentro do arquivo ``index.js``, alguém irá receptar este sinal e executar um código, sendo expressado pela função:
 ```
-"path/to/jre1.8.0/bin/java.exe" -Dfile.encoding=UTF-8 -jar Zeus-Server-0.0.0-STABLE.jar
+const { ipcMain, shell } = require('electron');
+ipcMain.on('openMyURL', (url) => {
+   shell.openExternal(url); 
+});
 ```
 
-# Arquivos
-O Zeus, assim como seu antecessor espiritual, o Comet, possui um arquivo chamado ``version.bat`` que serve para _checar_ a versão do Maven instalada no sistema. Por isso, antes de executá-lo, é necessário tê-lo instalado. Ele também inclui um pacote de ferramentas[^2] que pode ser utilizado para complementar a experiência de desenvolvimento.
+Já dentro do arquivo ``index.html``, as coisas podem escalar muito mais. Utilizando do jQuery, você pode expandir estas funções a nível gráfico, visto que métodos IPC também podem ser enviados pelo ``index.js`` e recepcionados pelo primeiro. A seguinte função explica isso:
 
-# Lista
-No decorrer do projeto, é estimado com que esta lista esteja completa. As que forem cumpridas e não precisarem de nenhuma refatoração futura estarão sendo marcadas com um :tada:.
-- [ ] Refatoração do Código
-- [x] Correção dos Comandos Antigos :tada:
-- [ ] Códigos dos WIREDs
-- [ ] Integração Universal dos Websockets
-- [ ] API de Avatares Universal
-- [ ] Atualização de Dependências
-- [ ] Programação do SnowStorm
-- [ ] Adição de novos Comandos e WIREDs
-- [ ] _Graphical User Interface_
-- [ ] Integração de Novas Mecânicas[^3]
-
-# Ofuscação de Origem 
-Método de boot a ser utilizado ofuscando a origem dos códigos _Zeus_[^4]. Como o projeto se tratará de um _closed-source_, é necessário com que boa parte do código seja ofuscado ou escondido para com que não hajam problemas do tipo _broken pipeline_ ou _FTP_[^5]. O __código abaixo__ representa o pulso **on**. Para desligar, basta apertar as teclas ``CTRL+C`` para terminar o software — utilizado, geralmente, também, para neutralizar ações do Prompt de Comando em lotes.
-
-```java
-package com.boot;
-
-import com.olympus.server.boot.Zeus;
-import com.google.common.collect.Maps;
-
-import java.util.Map;
-
-public class Main {
-    public static void main(String[] args) {
-        Zeus.run(args);
-    }
-}
+``index.js``
 ```
-
-[^1]: Uma das últimas atualizações de código que pretendemos é a de atualização de pacotes. Há uma grande chance deles virem visto que os ataques de hotéis retrôs, ultimamente, têm sido muito mais poderosos do que o que estávamos acostumados.
-[^2]: A pasta Tools possui uma interface em WebApp com um socket e funções remotas simples. Ela pode ser consultada para ver as estatísticas do Emulador em tempo real e realizar outras funções sem a necessidade de estar in-game.
-[^3]: Exemplos de mecânica: Duas jaquetas. Armário com Múltiplas Páginas. Sistema de Rolagem de Dados. Moeda personalizada. Gerenciamento de planilhas através do banco de dados entre outros.
-[^4]: O projeto é fechado, portanto, ter discrição na produção é essencial. Além disso, fornece segurança e possibilita com que chaves RSA, utilizadas pelo Habbo, sofram _hardcode_ dentro do código do Emulador ou nas configurações dele propriamente.
-[^5]: Pacotes que possuem informações possíveis de serem lidas por humanos via [Wireshark](https://www.wireshark.org/) ou qualquer outro software de análise da dados via _WiFi_. São criptografadas utilizando _TCP_ ou _SSL_ nas dependências Coerce e Hikari Connection Pool — ambas altamente dependentes de _HTTP Request_. Também será **mandatório** com que sejam utilizados links do tipo ``https://``.
+ipcMain.send('sendAjax');
+```
+``index.html``
+```
+<script>
+    const { ipcRenderer } = require('electron');
+    const IPC = ipcRenderer;
+    const WebView = document.querySelector('WebView');
+    IPC.on('sendAjax', () => {
+        WebView.executeJavaScript(`
+            $.ajax({
+                type: "POST",
+                url: "https://example/login",
+                data: ${JSON.stringify($(".someForm").serializeObject())},
+                dataType: "json"
+            }).done(function(result) {
+                console.log(JSON.stringify(result));
+                location.href="https://example.com/client";
+            });
+        `)
+    });
+</script>
+```
