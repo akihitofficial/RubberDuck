@@ -72,13 +72,13 @@
         "nsis": {
             "installerIcon": "icon.ico",
             "uninstallerIcon": "icon.ico",
-            "uninstallDisplayName": "Uninstall",
+            "uninstallDisplayName": "RubberDuck",
             "oneClick": true,
             "perMachine": false,
             "artifactName": "RubberDuckSetup.${ext}"
         },
         "mac": {
-            "icon": "ico.ico",
+            "icon": "icon.ico",
             "category": "public.games.social-networking",
             "darkModeSupport": true,
             "hardenedRuntime": true,

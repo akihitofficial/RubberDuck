@@ -78,7 +78,7 @@ app.commandLine.appendSwitch('disable-site-isolation-trials');
 // Create Graphical User Interface
 let createWindow = async() => {
     MainWindow = new BrowserWindow({
-        icon: Path.join(__dirname, '/ico.ico'),
+        icon: Path.join(__dirname, '/icon.ico'),
         width: 1280,
         height: 720,
         resizable: false,
