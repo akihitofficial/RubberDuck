@@ -28,6 +28,7 @@
                 <label for="password">Senha</label>
                 <input id="password" type="password" name="password">
             </div>
+            <div class="showPassword"></div>
             <input type="hidden" name="csrftoken">
             <input type="hidden" name="remember_me" value="false">
             <button id="submitLogin" class="login-button">Entrar</button>
@@ -114,6 +115,14 @@
 			});
 			return o;
 		};
+        // Show Password
+        $('.showPassword').on('click', function() {
+            $(this).toggleClass('hidePassword-icon');
+            $('#password').prop('type', 'password');
+            if ($(this).hasClass('hidePassword-icon')) {
+                $('#password').prop('type', 'text');
+            };
+        });
         // First Floating Label
         const username = $('#username');
         const clickEffectOne = $('#clickEffectOne');
@@ -121,7 +130,7 @@
             clickEffectOne.addClass('active');
         });
         username.blur(function(){
-            if($('#username').val() != '') {
+            if(username.val() != '') {
                 return
             } else {
                 clickEffectOne.removeClass('active');
@@ -132,13 +141,15 @@
         const clickEffectTwo = $('#clickEffectTwo');
         password.on('focus', () => {
             clickEffectTwo.addClass('active');
+            $('.showPassword').show();
         });
         password.blur(function(){
-            if($('#password').val() != '') {
+            if(password.val() != '') {
                 return
             } else {
                 clickEffectTwo.removeClass('active');
-            }
+                $('.showPassword').hide();
+            };
         });
         // IPC Translator (Next Update)
         IPC.on('setConfig', (e, config) => {
@@ -259,6 +270,7 @@
                 $('.loading').fadeOut();
                 LoginNotificationURL.play();
             }, 1000);
+            $('.showPassword').hide();
             IPC.send('getConfig');
             IPC.send('getData');
         });

@@ -342,6 +342,22 @@ illustration {
     cursor: pointer;
 }
 
+.showPassword {
+    position: absolute;
+    margin-top: -31px;
+    right: 80px;
+    width: 24px;
+    height: 14px;
+    background: url('./images/hidePassword.png');
+    cursor: pointer;
+    background-size: cover;
+    opacity: 0.6;
+}
+
+.hidePassword-icon {
+    background-image: url('./images/showPassword.png')!important;
+}
+
 .close-icon {
     background: url('./images/close-button.png');
 }

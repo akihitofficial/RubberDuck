@@ -80,7 +80,7 @@ let createWindow = async() => {
     MainWindow = new BrowserWindow({
         icon: Path.join(__dirname, '/icon.png'),
         width: 1280,
-        height: 768,
+        height: 720,
         resizable: false,
         webPreferences: {
             title: Configuration.Hotel.HotelName,
