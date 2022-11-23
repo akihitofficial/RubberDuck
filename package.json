@@ -78,7 +78,7 @@
             "artifactName": "RubberDuckSetup.${ext}"
         },
         "mac": {
-            "icon": "icon.png",
+            "icon": "ico.ico",
             "category": "public.games.social-networking",
             "darkModeSupport": true,
             "hardenedRuntime": true,
