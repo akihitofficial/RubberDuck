@@ -1,9 +1,11 @@
-![image](https://img.shields.io/badge/Versão-2.0.0-blue.svg?style=for-the-badge&logo=verizon)
-![image](https://img.shields.io/badge/Estado-Concluído-green.svg?style=for-the-badge&logo=instatus&logoColor=white)
+# RubberDuck
 
 <p class="center">
   <img src="https://i.imgur.com/G1jTQ54.png">
 </p>
+
+![image](https://img.shields.io/badge/Versão-2.0.0-blue.svg?style=for-the-badge&logo=verizon)
+![image](https://img.shields.io/badge/Estado-Concluído-green.svg?style=for-the-badge&logo=instatus&logoColor=white)
 
 **RubberDuck** é um aplicativo feito para atender as necessidades comunitárias. Ele possui todas as ferramentas que um aplicativo de Flash pode oferecer, com um bônus de interação direta entre cliente e aplicativo. Como ele é altamente dependente da Lux API, um outro projeto da dotDev Group, muito provavelmente não se integrará corretamente em servidores que utilizem de **Cosmic** como site e **Arcturus Morningstar** como emulador.
 
