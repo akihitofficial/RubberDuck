@@ -18,7 +18,7 @@ Você precisará das ferramentas NodeJS e NPM (Node Packet Manager) para fazer i
 #### Windows
 ```
 npm i
-npm run build--win
+npm run build-win
 ```
 Após o término da compilação, vá até a pasta **releases** e você estará pronto para fazer a distribuição.
 
@@ -58,7 +58,7 @@ cd ~/Desktop/RubberDuck
 Depois estes:
 ```
 npm i
-npm run build--linux
+npm run build-linux
 ```
 Após a compilação, seu aplicativo estará pronto para distribuição, localizado na pasta **releases**. Contudo, ainda é necessário com que haja um gerenciador de pacotes Debian para fazer a instalação, no qual será amplamente explicada em um guia na aba de ajuda da plataforma.
 
