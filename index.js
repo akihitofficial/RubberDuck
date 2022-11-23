@@ -154,6 +154,9 @@ ipcMain.on('doNotKeepDataAlive', (e) => {
             }
         });
     }
+    app.relaunch();
+    app.exit(0);
+    app.quit();
 });
 ipcMain.on('login', async(e, username, password) => {
     // Login Form
@@ -175,7 +178,8 @@ ipcMain.on('clearCache', async() => {
     MainWindow.webContents.session.clearStorageData();
     // Application Restart
     app.relaunch();
-    app.exit();
+    app.exit(0);
+    app.quit();
 });
 // Application Handlers
 app.on('window-all-closed', () => {
