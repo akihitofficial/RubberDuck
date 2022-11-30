@@ -7,7 +7,7 @@
 ![image](https://img.shields.io/badge/Versão-2.0.0-blue.svg?style=for-the-badge&logo=verizon)
 ![image](https://img.shields.io/badge/Estado-Concluído-green.svg?style=for-the-badge&logo=instatus&logoColor=white)
 
-**RubberDuck** é um aplicativo feito para atender as necessidades comunitárias. Ele possui todas as ferramentas que um aplicativo de Flash pode oferecer, com um bônus de interação direta entre cliente e aplicativo. Como ele é altamente dependente da Lux API, um outro projeto da dotDev Group, muito provavelmente não se integrará corretamente em servidores que utilizem de **Cosmic** como site e **Arcturus Morningstar** como emulador.
+**RubberDuck** é um aplicativo feito para atender as necessidades comunitárias. Ele possui todas as ferramentas que um aplicativo de Flash pode oferecer, com um bônus de interação direta entre cliente e aplicativo.
 
 ### Configurando o Aplicativo
 Acesse o arquivo ``configuration.json`` e faça as alterações por lá. O nome do aplicativo deve ser mantido, contudo, alterações na API devem ser feitas. Substitua o link ``example.com`` pelo que está sendo utilizado atualmente. Vá até a pasta ``GUI`` e edite o arquivo ``index.html``, editando, na WebView, os mesmos valores. Feito isso, você está pronto para compilar.
